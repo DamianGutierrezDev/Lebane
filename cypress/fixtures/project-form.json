@@ -1,0 +1,42 @@
+{
+  "noOptionsMessage": "No se encontraron opciones disponibles",
+  "nonExistentOption": "ValorInexistenteQA",
+  "autocompletes": [
+    { "field": "moneda", "label": "Moneda" },
+    { "field": "pais", "label": "País" },
+    { "field": "estado", "label": "Estado", "requires": { "pais": "Argentina" } },
+    { "field": "ciudad", "label": "Ciudad", "requires": { "pais": "Argentina", "estado": "Capital Federal" } },
+    { "field": "jurisdiccionId", "label": "Jurisdicción (IIBB)" },
+    { "field": "tipoConstruccion", "label": "Tipo de construcción" },
+    { "field": "modalidadAjuste", "label": "Modalidad de ajuste" }
+  ],
+  "countries": [
+    { "name": "Argentina", "states": 25, "firstState": "Buenos Aires" },
+    { "name": "España", "states": 19, "firstState": "Andalucía" },
+    { "name": "México", "states": 32, "firstState": "Aguascalientes" },
+    { "name": "Paraguay", "states": 6, "firstState": "Alto Paraná" },
+    { "name": "Uruguay", "states": 19, "firstState": "Artigas" }
+  ],
+  "exchangeRate": {
+    "error": "El tipo de cambio debe ser mayor a 0.",
+    "invalid": [
+      { "caso": "cero", "value": "0" },
+      { "caso": "letras", "value": "abc" },
+      { "caso": "vacío", "value": "" }
+    ],
+    "valid": { "value": "1500", "formatted": "1.500" },
+    "outOfRange": "99999999999999999999"
+  },
+  "alphanumeric": {
+    "streetNumber": "123B",
+    "documentNumber": "12345678Z"
+  },
+  "businessNameFields": [
+    "Nombre *",
+    "Descripción",
+    "Fecha de registro *",
+    "Tipo de documento *",
+    "Número de documento *"
+  ],
+  "duplicateNameToast": "Ya existe un proyecto con el nombre \"{name}\" en la organización."
+}

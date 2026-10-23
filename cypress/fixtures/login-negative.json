@@ -1,0 +1,36 @@
+[
+  {
+    "id": "AUTH-02",
+    "caso": "contraseña incorrecta",
+    "email": "$USER_EMAIL",
+    "password": "Incorrecta123!",
+    "errores": [
+      "Por favor, asegurate que el correo electrónico es correcto.",
+      "Por favor, asegurate que la contraseña es correcta."
+    ]
+  },
+  {
+    "id": "AUTH-03",
+    "caso": "usuario inexistente",
+    "email": "no.existe.qa.auto@lebane.test",
+    "password": "Cualquiera123!",
+    "errores": [
+      "Por favor, asegurate que el correo electrónico es correcto.",
+      "Por favor, asegurate que la contraseña es correcta."
+    ]
+  },
+  {
+    "id": "AUTH-04",
+    "caso": "email con formato inválido",
+    "email": "usuario-sin-arroba",
+    "password": "Cualquiera123!",
+    "errores": ["El correo electrónico debe ser valido."]
+  },
+  {
+    "id": "AUTH-05",
+    "caso": "campos vacíos",
+    "email": "",
+    "password": "",
+    "errores": ["El correo electrónico es obligatorio.", "La contraseña es obligatoria."]
+  }
+]

@@ -1,0 +1,23 @@
+{
+  "name": "lebane",
+  "version": "1.0.0",
+  "description": "QA Automation - Listas de precios de unidades (Lebane)",
+  "scripts": {
+    "cy:open": "cypress open --e2e",
+    "cy:run": "cypress run --e2e",
+    "test": "cypress run --e2e --browser electron",
+    "test:smoke": "cypress run --e2e --browser electron --spec \"cypress/e2e/auth/**/*.cy.ts,cypress/e2e/proyectos/crear-proyecto.cy.ts,cypress/e2e/unidades/**/*.cy.ts,cypress/e2e/listas-precios/**/*.cy.ts\"",
+    "test:validaciones": "cypress run --e2e --browser electron --spec \"cypress/e2e/proyectos/formulario-proyecto.cy.ts\"",
+    "typecheck": "tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.19.43",
+    "cypress": "^16.2.0",
+    "cypress-mochawesome-reporter": "^5.0.0",
+    "exceljs": "^4.4.0",
+    "typescript": "^7.0.2"
+  }
+}

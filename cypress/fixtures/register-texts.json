@@ -1,0 +1,31 @@
+{
+  "header": "Crear mi cuenta",
+  "title": "Registrarme en Lebane",
+  "subtitle": "Por favor, ingresa tu correo electrónico y contraseña para crear tu cuenta.",
+  "fields": [
+    { "label": "Nombre de la empresa *", "name": "nombre", "placeholder": "Nombre" },
+    { "label": "Correo electrónico *", "name": "email", "placeholder": "Correo electrónico" },
+    { "label": "Teléfono *", "name": "telefono", "placeholder": "Número de teléfono" }
+  ],
+  "countryLabel": "País *",
+  "countryPlaceholder": "Seleccionar",
+  "countries": ["Argentina", "España", "México", "Paraguay", "Uruguay"],
+  "submit": "Ingresar a Lebane",
+  "loginPrompt": "¿Ya tienes usuario?",
+  "loginLink": "Ingresar",
+  "requiredErrors": [
+    "El nombre es obligatorio.",
+    "El correo electrónico es obligatorio.",
+    "El teléfono es obligatorio.",
+    "El país es obligatorio."
+  ],
+  "invalidEmailError": "El correo electrónico debe ser valido.",
+  "duplicateEmailToast": "Ya existe una cuenta con ese correo electrónico",
+  "confirmation": {
+    "title": "Email de confirmación enviado",
+    "message": "Confirme su dirección de correo electrónico siguiendo las instrucciones enviadas a {email}.",
+    "help": "Si no recibes un correo electrónico de confirmación, puedes contactarnos si necesitas ayuda.",
+    "helpLink": "contactarnos",
+    "loginLink": "Iniciar sesión"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "header": "Ingresar",
+  "title": "Ingresar en Lebane",
+  "subtitle": "Por favor, ingresa tu correo electrónico y contraseña para ingresar a tu cuenta.",
+  "emailLabel": "Correo electrónico *",
+  "emailPlaceholder": "ejemplo@compañia.com",
+  "passwordLabel": "Contraseña *",
+  "passwordPlaceholder": "Contraseña",
+  "rememberLabel": "Recordarme",
+  "rememberCheckedByDefault": true,
+  "submit": "Ingresar",
+  "links": ["Registrarme", "Recuperar contraseña", "Términos y condiciones de Lebane"],
+  "successToast": "Sesión iniciada correctamente!"
+}

@@ -1,0 +1,23 @@
+name: E2E Cypress
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: cypress-io/github-action@v6
+        env:
+          CYPRESS_USER_EMAIL: ${{ secrets.USER_EMAIL }}
+          CYPRESS_USER_PASSWORD: ${{ secrets.USER_PASSWORD }}
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: reporte-cypress
+          path: cypress/reports
