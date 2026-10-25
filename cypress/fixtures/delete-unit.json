@@ -1,0 +1,16 @@
+{
+  "dialog": {
+    "title": "Eliminar unidad",
+    "question": "¿Estás seguro de querer eliminar la unidad {unit} de la lista de precios {list} ?",
+    "emptyListWarning": "Al quitar esta unidad, la lista de precios quedará vacia y será eliminada.",
+    "orphanUnitWarning": "Si la unidad no pertenece a ninguna otra lista de precios, se borrará automáticamente.",
+    "confirm": "Confirmar"
+  },
+  "deletedToast": "Unidad eliminada de la lista de precios",
+  "withoutLists": {
+    "priceListButton": "Listas de precios",
+    "priceListMenu": "No hay listas de precios",
+    "emptyTable": "No hay registros para mostrar",
+    "primaryAction": "Debe subir un template"
+  }
+}

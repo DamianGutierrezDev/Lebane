@@ -25,7 +25,7 @@ const toRow = (unit: TemplateUnit) => {
   row[9] = unit.price; // I  Precio (*)
   row[10] = 'USD'; // J  Moneda (*)
   row[11] = 'DISPONIBLE'; // K  Estado (*)
-  row[23] = unit.floor ?? 1; // W  Piso (*)
+  row[20] = unit.floor ?? 1; // T  Piso (*)
   return row;
 };
 

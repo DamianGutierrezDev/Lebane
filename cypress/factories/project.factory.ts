@@ -5,8 +5,14 @@ export interface ProjectSetup {
   priceListName?: string;
 }
 
+/**
+ * Número de unidad con la convención de Lebane: piso + depto en dos dígitos.
+ * Ejemplo: piso 1, depto 5 → "105".
+ */
+export const buildUnitName = (floor: number, unit: number) => `${floor}${String(unit).padStart(2, '0')}`;
+
 // Con 1 piso x 1 unidad por piso, el setup genera automáticamente la unidad "101" en la lista inicial
-export const AUTO_UNIT = '101';
+export const AUTO_UNIT = buildUnitName(1, 1);
 
 export const buildSetup =(overrides: Partial<ProjectSetup> = {}): ProjectSetup => ({
   pricePerM2: 1000,
@@ -72,5 +78,3 @@ export const buildRegistration = () => {
     country: 'Argentina',
   };
 };
-
-export const buildUnitName =(prefix = 'U') => `${prefix}-${uniqueSuffix()}`;

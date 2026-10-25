@@ -67,7 +67,7 @@ docs/casos-de-prueba.md  # diseño de casos: regla del enunciado → caso → sp
 
 ## Supuestos
 
-- **LP-09:** supone que una unidad del template con el mismo número que una existente se asocia a esa unidad (queda en ambas listas) en lugar de duplicarse. Es una regla a validar con negocio.
+- **LP-09 (no automatizado):** una unidad presente en dos listas debería seguir existiendo al quitarla de una. Para armar ese escenario hace falta que el template cree una segunda lista, que hoy no ocurre (KAN-12). Además, queda por validar con negocio si una unidad del template con un número existente se asocia a esa unidad o se duplica.
 
 ## Observaciones sobre la app
 

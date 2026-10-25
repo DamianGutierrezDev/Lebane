@@ -110,4 +110,4 @@ Los mensajes esperados de AUTH-02 a AUTH-05 están en `fixtures/login-negative.j
 | LP-06 | Quitar una unidad de una lista con varias | Sale la unidad y la lista sigue existiendo | `listas-precios/eliminar-unidad.cy.ts` |
 | LP-07 | Quitar la única unidad (o todas) de una lista | La lista se elimina | `listas-precios/eliminar-unidad.cy.ts` |
 | LP-08 | Quitar una unidad que estaba en una sola lista | La unidad no existe en ninguna lista | `listas-precios/eliminar-unidad.cy.ts` |
-| LP-09 | Quitar de una lista una unidad que está en dos | La unidad sigue existiendo en la otra lista | `listas-precios/eliminar-unidad.cy.ts` |
+| LP-09 | Quitar de una lista una unidad que está en dos | La unidad sigue existiendo en la otra lista | **No automatizado:** bloqueado por KAN-12 (el template no crea una segunda lista). Contracara de LP-08, no es una regla explícita del enunciado. |

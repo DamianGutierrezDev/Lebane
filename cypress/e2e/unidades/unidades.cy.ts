@@ -1,5 +1,4 @@
 import { unitsPage } from '../../pages/UnitsPage';
-import { buildUnitName } from '../../factories/project.factory';
 
 describe('Unidades manuales', () => {
   let projectId: number;
@@ -17,32 +16,30 @@ describe('Unidades manuales', () => {
   });
 
   it('LP-03 crea una unidad manualmente en la lista de precios actual', () => {
-    const unit = buildUnitName();
-
     unitsPage.rowCount().then((before) => {
-      unitsPage.addUnit(unit);
-      unitsPage.rowCount().should('eq', before + 1);
-    });
+      unitsPage.addNextUnit().then((unit) => {
+        unitsPage.rowCount().should('eq', before + 1);
 
-    unitsPage.visit(projectId);
-    unitsPage.row(unit).should('be.visible');
+        unitsPage.visit(projectId);
+        unitsPage.row(unit).should('be.visible').find('td[data-column-id="piso"]').should('contain', 'Piso 1');
+      });
+    });
   });
 
   it('LP-04 modificar el precio de una unidad actualiza la misma lista de precios', () => {
-    const unit = buildUnitName();
-    unitsPage.addUnit(unit);
+    unitsPage.addNextUnit().then((unit) => {
+      unitsPage.currentPriceList().then((listBefore) => {
+        unitsPage.priceLists().then((listsBefore) => {
+          unitsPage.setPrice(unit, 150000);
 
-    unitsPage.currentPriceList().then((listBefore) => {
-      unitsPage.priceLists().then((listsBefore) => {
-        unitsPage.setPrice(unit, 150000);
-
-        unitsPage.price(unit).should('contain', '150.000');
-        unitsPage.currentPriceList().should('eq', listBefore);
-        unitsPage.priceLists().should('deep.equal', listsBefore);
+          unitsPage.price(unit).should('contain', '150.000');
+          unitsPage.currentPriceList().should('eq', listBefore);
+          unitsPage.priceLists().should('deep.equal', listsBefore);
+        });
       });
-    });
 
-    unitsPage.visit(projectId);
-    unitsPage.price(unit).should('contain', '150.000');
+      unitsPage.visit(projectId);
+      unitsPage.price(unit).should('contain', '150.000');
+    });
   });
 });
