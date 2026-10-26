@@ -7,6 +7,18 @@
     "confirm": "Confirmar"
   },
   "deletedToast": "Unidad eliminada de la lista de precios",
+  "bulk": {
+    "selectedCount": "{count} filas ({count} seleccionadas)",
+    "title": "Eliminar elementos",
+    "question": "¿Estás seguro de querer eliminar los elementos seleccionados ({count})?",
+    "item": "Unidad {unit}",
+    "itemFloor": "Piso {floor}",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "success": "Proceso completado con exito, puedes cerrar este diálogo.",
+    "close": "Cerrar",
+    "toast": "Todos los elementos se eliminaron correctamente."
+  },
   "withoutLists": {
     "priceListButton": "Listas de precios",
     "priceListMenu": "No hay listas de precios",

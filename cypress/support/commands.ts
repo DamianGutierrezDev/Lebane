@@ -43,9 +43,19 @@ Cypress.Commands.add('simulateBrowserRestart', () => {
 
 Cypress.Commands.add('createProject',(project: ProjectData) => {
   projectFormPage.open();
+  if (project.logo) projectFormPage.uploadLogo(project.logo);
   projectFormPage.fill(project);
+  // El logo se sube después de crear el proyecto, con PATCH /proyect/{id}/update-logo
+  cy.intercept('PATCH', '**/proyect/*/update-logo').as('updateLogo');
   projectFormPage.submit();
   cy.contains('.Toastify__toast', 'Creación exitosa').should('be.visible');
+  if (project.logo) {
+    const fileName = project.logo.split('/').pop()!;
+    cy.wait('@updateLogo').then(({ response }) => {
+      expect(response?.statusCode).to.eq(200);
+      expect(response?.body.logo).to.match(new RegExp(`/${Cypress._.escapeRegExp(fileName)}$`));
+    });
+  }
 
   // El id sale de los links del sidebar, que pasan de /proyecto/:id/ a /proyecto/<id>/ al entrar al proyecto
   return cy

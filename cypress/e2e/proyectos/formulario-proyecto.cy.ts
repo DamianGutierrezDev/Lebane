@@ -198,4 +198,16 @@ describe('Formulario de proyecto: validaciones', () => {
       });
     });
   });
+
+  describe('Logo del proyecto', () => {
+    beforeEach(() => projectFormPage.open());
+
+    it('PF-17 un logo en formato PDF se rechaza con un mensaje de error', () => {
+      projectFormPage.selectLogo(form.logo.invalidFile);
+
+      projectFormPage.logoError().should('have.text', form.logo.invalidFormatError);
+      projectFormPage.logoPreview().should('not.exist');
+      projectFormPage.logoDropZone().should('contain', form.logo.emptyLabel);
+    });
+  });
 });

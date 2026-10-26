@@ -122,6 +122,38 @@ class UnitsPage {
     cy.get(this.sel.dialog).should('not.exist');
   }
 
+  // --- Borrado masivo ---
+
+  /** Checkbox del encabezado de la tabla ("Alternar seleccionar todo"). */
+  selectAllRows() {
+    cy.get(`${TABLE} thead input[aria-label="Alternar seleccionar todo"]`).check({ force: true });
+  }
+
+  rowsCounter() {
+    return cy.contains(`${TABLE} span`, /\d+ filas?/).invoke('text').then((text) => text.trim());
+  }
+
+  /** Tacho de la barra de herramientas: elimina las filas seleccionadas. */
+  requestBulkDelete() {
+    cy.get('[data-testid="toolbar-eliminar-seleccionadas"]').should('be.enabled').click();
+    return cy.contains(this.sel.dialog, 'Eliminar elementos');
+  }
+
+  bulkDeleteDialog() {
+    return cy.contains(this.sel.dialog, 'Eliminar elementos');
+  }
+
+  /** Confirma y espera a que el proceso termine (la app muestra el progreso unidad por unidad). */
+  confirmBulkDelete(successMessage: string) {
+    this.bulkDeleteDialog().contains('button', 'Confirmar').click();
+    return cy.contains(this.sel.dialog, successMessage, { timeout: 60000 });
+  }
+
+  closeBulkDeleteDialog() {
+    this.bulkDeleteDialog().contains('button', 'Cerrar').click();
+    cy.get(this.sel.dialog).should('not.exist');
+  }
+
   toast(text: string) {
     return cy.contains('.Toastify__toast', text);
   }
@@ -181,10 +213,14 @@ class UnitsPage {
       });
   }
 
+  /** Elegir la lista que ya está seleccionada no cierra el menú, así que en ese caso no se abre. */
   selectPriceList(name: string) {
-    this.priceListButton().click();
-    cy.contains(this.sel.priceListItem, name).click();
-    this.currentPriceList().should('eq', name);
+    this.currentPriceList().then((current) => {
+      if (current === name) return;
+      this.priceListButton().click();
+      cy.contains(this.sel.priceListItem, name).click();
+      this.currentPriceList().should('eq', name);
+    });
   }
 
   // --- Templates ---

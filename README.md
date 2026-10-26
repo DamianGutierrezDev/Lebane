@@ -16,7 +16,7 @@ cp cypress.env.example.json cypress.env.json   # completar USER_EMAIL y USER_PAS
 
 `cypress.env.json` está en `.gitignore`, así que las credenciales nunca se suben al repo. En CI se toman de los secrets `USER_EMAIL` y `USER_PASSWORD`.
 
-No hace falta preparar archivos a mano. Los tests completan el template oficial (`cypress/fixtures/templates/template_unidades.xlsx`, descargado desde la app) con unidades de nombre único mediante un `cy.task` con `exceljs`.
+No hace falta preparar archivos a mano. Los tests completan el template oficial (`cypress/fixtures/templates/template_unidades.xlsx`, descargado desde la app) con unidades de nombre único mediante un `cy.task` con `exceljs`. Las imágenes del logo del proyecto (`logo-proyecto.png` y `logo-invalido.pdf`) están en `cypress/fixtures/images/`.
 
 ## Ejecución
 
@@ -40,7 +40,7 @@ cypress/
 ├── e2e/                 # specs agrupados por funcionalidad (IDs de casos en cada test)
 ├── pages/               # Page Objects: selectores privados + acciones por pantalla
 ├── factories/           # datos de prueba dinámicos (nombres únicos por corrida)
-├── fixtures/            # datos estáticos: casos negativos de login, template oficial
+├── fixtures/            # datos estáticos: casos negativos de login, template oficial, imágenes del logo
 ├── tasks/               # tareas de Node (generación del .xlsx de unidades)
 └── support/             # comandos custom (login con sesión, crear/preparar proyecto) y tipos
 docs/casos-de-prueba.md  # diseño de casos: regla del enunciado → caso → spec
@@ -62,12 +62,15 @@ docs/casos-de-prueba.md  # diseño de casos: regla del enunciado → caso → sp
 ## Flujo real de la app
 
 1. *Agregar proyecto* → formulario en `/primer-proyecto` → *Registrar* (toast "Creación exitosa").
+   - **Logo del proyecto:** el input acepta `.jpg`, `.jpeg` y `.png`. Al elegir el archivo solo se muestra la vista previa; la imagen se sube después de crear el proyecto, con `PATCH /proyect/{id}/update-logo`. Todos los proyectos que crea la suite llevan logo y `createProject` valida esa subida. Un archivo con otro formato se rechaza con un mensaje debajo del recuadro (PF-17).
 2. La primera vez que se entra a *Unidades* aparece **"Actualizar datos del proyecto"**. Ahí se completan precio M2, pisos, tipologías y unidades por piso, y **ahí se define el nombre opcional de la lista de precios inicial** (`versionListaPrecios`). Con 1 piso × 1 unidad, la app genera la unidad `101`.
 3. El tacho abre el diálogo *Eliminar unidad*, que anticipa si la lista quedará vacía y si la unidad se borrará.
 
 ## Supuestos
 
-- **LP-09 (no automatizado):** una unidad presente en dos listas debería seguir existiendo al quitarla de una. Para armar ese escenario hace falta que el template cree una segunda lista, que hoy no ocurre (KAN-12). Además, queda por validar con negocio si una unidad del template con un número existente se asocia a esa unidad o se duplica.
+- **LP-09:** una unidad presente en dos listas debería seguir existiendo al quitarla de una. Es la contracara de LP-08, no una regla explícita del enunciado.
+- **Nombre de la lista del template:** cargar un template siempre genera la lista "Lista precios DD/MM/AAAA" con la fecha del día. Si ya existe una lista con ese nombre (la inicial sin nombre propio, o un template cargado ese mismo día), la app suma las unidades a esa lista en vez de crear otra. Por eso LP-05 y LP-09 crean el proyecto con una lista inicial con nombre propio. Queda por validar con negocio si dos cargas del mismo día deberían generar listas distintas.
+- **Unidades repetidas en el template:** una unidad del template con un número que ya existe se asocia a esa unidad (mismo id) y no se duplica.
 
 ## Observaciones sobre la app
 
@@ -81,6 +84,7 @@ docs/casos-de-prueba.md  # diseño de casos: regla del enunciado → caso → sp
 - **Posible bug (LP-12):** el botón *Registrar* se habilita aunque el nombre del proyecto tenga solo espacios.
 - **Posible bug:** "Recordarme" no tiene efecto observable. Con o sin el check, los tokens se guardan en `localStorage` y la sesión sigue activa al reabrir el navegador. Tampoco precarga el email después del logout. A validar con negocio cuál es el comportamiento esperado.
 - **Bug (REC-05): recuperar contraseña no valida que el email exista.** Con un correo no registrado, el backend responde `400` en `POST /users/reset-password`, pero la UI muestra igual "Se reseteo la contraseña verifique el email", en un toast de error. El usuario cree que el reseteo se hizo cuando no pasó nada. Si negocio prefiere no revelar qué cuentas existen (*user enumeration*), el mensaje debería ser neutro ("Si el correo está registrado, te enviaremos las instrucciones") y no afirmar un reseteo. A "reseteo" además le falta la tilde (*reseteó*).
+- **Borrado masivo con wording variable:** seleccionando todas las unidades, el modal "Eliminar elementos" muestra textos distintos según el caso. Con 2 y 3 unidades pregunta "¿Estás seguro de querer eliminar los elementos seleccionados (N)?", sin advertencia. Con 4 unidades se vio "¿Estás seguro de querer eliminar todos los elementos (4)?" más la advertencia "Se eliminarán todos los elementos. Esta acción no se puede deshacer.". La regla no está confirmada; a validar con negocio. En el listado, además, la tipología aparece como "Tipologa 14" (sin tilde y con lo que parece un ID en lugar del nombre), y el mensaje final dice "con exito" sin tilde.
 - **Logo sin navegación:** en el login, hacer clic en el ícono de Lebane del encabezado no redirige al home. Es una imagen sin link (`<img alt="Logo">`), cuando lo esperable es que el logo lleve a la página principal.
 - **Recuperar contraseña sin salida:** la pantalla no tiene link para volver al login. Además, su formulario reutiliza `name="loginForm"`.
 - **Wording en registro:** el subtítulo pide "correo electrónico y contraseña", pero el formulario no tiene campo de contraseña. Además, el botón de alta dice "Ingresar a Lebane" en una pantalla titulada "Registrarme en Lebane".

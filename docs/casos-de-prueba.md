@@ -67,7 +67,7 @@ Los mensajes esperados de AUTH-02 a AUTH-05 están en `fixtures/login-negative.j
 
 ## Formulario de proyecto: validaciones de inputs
 
-> Spec aparte (`npm run test:validaciones`). No crea proyectos. Datos en `fixtures/project-form.json`.
+> Spec aparte (`npm run test:validaciones`). No crea proyectos. Datos en `fixtures/project-form.json`; el PDF de PF-17 está en `fixtures/images/`.
 
 | ID | Caso | Resultado esperado | Estado |
 |---|---|---|---|
@@ -87,8 +87,9 @@ Los mensajes esperados de AUTH-02 a AUTH-05 están en `fixtures/login-negative.j
 | PF-14 | Número de documento alfanumérico ("12345678Z") | Se acepta | ✅ |
 | PF-15 | Crear razón social nueva | Pide Nombre, Descripción, Fecha de registro, Tipo y Número de documento. Registrar se habilita al completarlos | ✅ |
 | PF-16 | Nombre de proyecto existente | Toast "Ya existe un proyecto con el nombre "X" en la organización." | ✅ |
+| PF-17 | Logo en formato PDF | Se rechaza: borde rojo, mensaje "El archivo no es un JPG ni un PNG…" y sin vista previa | ✅ |
 
-Última corrida: 28 tests (PF-01, PF-04 y PF-05 se repiten por campo, país o valor). Pasan 22. Fallan 6 (PF-07 a PF-12), todos porque Registrar sigue habilitado con el dato inválido.
+Última corrida: 29 tests (PF-01, PF-04 y PF-05 se repiten por campo, país o valor). Pasan 23. Fallan 6 (PF-07 a PF-12), todos porque Registrar sigue habilitado con el dato inválido.
 
 ## Unidades
 
@@ -98,7 +99,7 @@ Los mensajes esperados de AUTH-02 a AUTH-05 están en `fixtures/login-negative.j
 |---|---|---|---|
 | LP-03 | Crear unidad manual | La unidad aparece en la lista actual y persiste al recargar | `unidades/unidades.cy.ts` |
 | LP-04 | Modificar el precio de una unidad | El precio se actualiza en la **misma** lista; no aparece una lista nueva | `unidades/unidades.cy.ts` |
-| LP-05 | Cargar template `.xlsx` | Se crea **una** lista nueva con las unidades del template | `unidades/template.cy.ts` |
+| LP-05 | Cargar template `.xlsx` en un proyecto cuya lista inicial tiene nombre propio | Se crea **una** lista nueva con las unidades del template | `unidades/template.cy.ts` |
 | LP-11 | Cargar archivo con formato inválido | Se muestra un error y no se crea ninguna lista | `unidades/template.cy.ts` |
 
 ## Quitar unidades (tacho rojo)
@@ -108,6 +109,7 @@ Los mensajes esperados de AUTH-02 a AUTH-05 están en `fixtures/login-negative.j
 | ID | Caso | Resultado esperado | Spec |
 |---|---|---|---|
 | LP-06 | Quitar una unidad de una lista con varias | Sale la unidad y la lista sigue existiendo | `listas-precios/eliminar-unidad.cy.ts` |
-| LP-07 | Quitar la única unidad (o todas) de una lista | La lista se elimina | `listas-precios/eliminar-unidad.cy.ts` |
+| LP-07 | Quitar la única unidad de una lista | La lista se elimina | `listas-precios/eliminar-unidad.cy.ts` |
+| LP-13 | Borrado masivo de todas las unidades de una lista (selección desde el encabezado) | El modal lista las unidades; al confirmar se eliminan y la lista desaparece | `listas-precios/eliminar-unidad.cy.ts` |
 | LP-08 | Quitar una unidad que estaba en una sola lista | La unidad no existe en ninguna lista | `listas-precios/eliminar-unidad.cy.ts` |
-| LP-09 | Quitar de una lista una unidad que está en dos | La unidad sigue existiendo en la otra lista | **No automatizado:** bloqueado por KAN-12 (el template no crea una segunda lista). Contracara de LP-08, no es una regla explícita del enunciado. |
+| LP-09 | Quitar de una lista una unidad que está en dos | La unidad sigue existiendo en la otra lista | `listas-precios/eliminar-unidad.cy.ts`. Contracara de LP-08, no es una regla explícita del enunciado. La segunda lista se arma con un template que trae la misma unidad: la app la asocia a la existente (mismo id), no la duplica. |

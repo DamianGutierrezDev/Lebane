@@ -34,7 +34,11 @@ export interface ProjectData {
   constructionType?: string;
   adjustment?: string;
   businessName?: string;
+  // Ruta del logo; sin valor el proyecto se crea sin logo
+  logo?: string;
 }
+
+export const PROJECT_LOGO = 'cypress/fixtures/images/logo-proyecto.png';
 
 export const formatDate = (date: Date) =>
   [date.getDate(), date.getMonth() + 1].map((n) => String(n).padStart(2, '0')).join('/') +
@@ -65,6 +69,7 @@ export const buildProject = (overrides: Partial<ProjectData> = {}): ProjectData 
     street: 'Av. Santa Fe',
     number: '1234',
     endDate: formatDate(nextYear),
+    logo: PROJECT_LOGO,
     ...overrides,
   };
 };

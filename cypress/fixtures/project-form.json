@@ -38,5 +38,10 @@
     "Tipo de documento *",
     "Número de documento *"
   ],
-  "duplicateNameToast": "Ya existe un proyecto con el nombre \"{name}\" en la organización."
+  "duplicateNameToast": "Ya existe un proyecto con el nombre \"{name}\" en la organización.",
+  "logo": {
+    "invalidFile": "cypress/fixtures/images/logo-invalido.pdf",
+    "invalidFormatError": "El archivo no es un JPG ni un PNG. Si es una foto de iPhone, puede ser HEIC aunque el nombre termine en .jpg: convertila antes de subirla.",
+    "emptyLabel": "Subir logo del proyecto"
+  }
 }

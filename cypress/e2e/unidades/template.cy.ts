@@ -1,17 +1,19 @@
 import { unitsPage } from '../../pages/UnitsPage';
+import { buildSetup } from '../../factories/project.factory';
 
 describe('Carga de unidades por template', () => {
   let projectId: number;
 
   beforeEach(() => {
     cy.login();
-    cy.prepareProject().then((id) => {
+    // La lista inicial lleva nombre propio: el template carga en "Lista precios DD/MM/AAAA" y,
+    // si ya existe una lista con ese nombre, suma las unidades ahí en lugar de crear otra (ver README)
+    cy.prepareProject(buildSetup({ priceListName: `ListaInicial${Date.now()}` })).then((id) => {
       projectId = id;
       unitsPage.visit(projectId);
     });
   });
 
-  // Hoy falla: la app agrega las unidades a la lista existente en vez de crear una nueva (bug KAN-12)
   it('LP-05 cargar un template crea una nueva lista de precios con sus unidades', () => {
     // Próximos deptos del piso 1 (102 y 103, ya que el setup genera la 101)
     unitsPage.nextUnitNames(2).then((units) => {

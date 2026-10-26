@@ -30,6 +30,10 @@ class ProjectFormPage {
     businessName: '[name="razonSocial"] input',
     businessNewName: field('nombreRazonSocial'),
     businessDocumentNumber: field('documentoDeIdentidadNumero'),
+    logoInput: 'input[id="file-logo del proyecto"]',
+    logoPreview: 'img[alt="Uploaded Logo"]',
+    logoDropZone: '[for="file-logo del proyecto"]',
+    logoError: 'p.text-red-600',
     exchangeRate: 'input[name="tipoDeCambio"]',
     exchangeRateAuto: 'Definir automáticamente',
     option: '[role="listbox"] [role="option"]',
@@ -66,6 +70,33 @@ class ProjectFormPage {
     cy.get(this.sel.endDate).type(project.endDate);
     this.select(this.sel.constructionType, project.constructionType);
     this.select(this.sel.adjustment, project.adjustment);
+  }
+
+  /**
+   * El input está oculto (la zona "Subir logo del proyecto" es su label) y acepta .jpg, .jpeg y .png.
+   * Al elegir el archivo solo se muestra la vista previa: se sube recién al registrar el proyecto.
+   */
+  uploadLogo(filePath: string) {
+    this.selectLogo(filePath);
+    cy.get(this.sel.logoPreview).should('be.visible');
+  }
+
+  /** Carga el archivo sin esperar la vista previa (el `accept` del input no frena a selectFile). */
+  selectLogo(filePath: string) {
+    cy.get(this.sel.logoInput).selectFile(filePath, { force: true });
+  }
+
+  logoPreview() {
+    return cy.get(this.sel.logoPreview);
+  }
+
+  logoDropZone() {
+    return cy.get(this.sel.logoDropZone);
+  }
+
+  /** El mensaje de error se muestra debajo del recuadro del logo. */
+  logoError() {
+    return cy.get(this.sel.logoInput).parent().find(this.sel.logoError);
   }
 
   submit() {
